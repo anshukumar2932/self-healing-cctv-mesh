@@ -1,0 +1,1 @@
+"""Starter module: Shared data contracts and schema validation."""\n\n# TODO: migrate the team's implementation here.\n

@@ -1,0 +1,1 @@
+"""Starter module: Project configuration and reproducibility settings."""\n\n# TODO: migrate the team's implementation here.\n

@@ -1,0 +1,602 @@
+# ============================================================
+# Self-Healing CCTV Mesh Network
+# .gitignore
+# ============================================================
+
+
+# ------------------------------------------------------------
+# Python
+# ------------------------------------------------------------
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*$py.class
+
+# Python cache / bytecode
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+.pyright/
+
+# Coverage
+.coverage
+.coverage.*
+coverage.xml
+coverage.json
+htmlcov/
+.pytest_cache/
+
+# Type checking
+.dmypy.json
+dmypy.json
+
+# Python profiling
+*.prof
+.prof
+
+# ------------------------------------------------------------
+# Virtual environments
+# ------------------------------------------------------------
+
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ------------------------------------------------------------
+# Packaging / Build artifacts
+# ------------------------------------------------------------
+
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+wheels/
+MANIFEST
+*.whl
+
+# ------------------------------------------------------------
+# Testing artifacts
+# ------------------------------------------------------------
+
+.tox/
+.nox/
+.pytest_cache/
+test-results/
+test-results/
+junit.xml
+*.junit.xml
+
+# Hypothesis
+.hypothesis/
+
+# Benchmark results
+.benchmarks/
+
+# ------------------------------------------------------------
+# Logs
+# ------------------------------------------------------------
+
+*.log
+logs/
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ------------------------------------------------------------
+# Environment / Secrets
+# ------------------------------------------------------------
+
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Local secrets
+secrets/
+*.secret
+*.secrets
+*.key
+*.pem
+*.crt
+
+# Local configuration
+config.local.*
+settings.local.*
+
+# ------------------------------------------------------------
+# Project-generated files
+# ------------------------------------------------------------
+
+# Experiment outputs
+experiments/*
+!experiments/.gitkeep
+
+# Simulation / experiment results
+results/*
+!results/.gitkeep
+
+# Generated reports
+reports/
+output/
+outputs/
+generated/
+
+# Simulation data
+*.csv
+*.tsv
+*.jsonl
+
+# NOTE:
+# Do NOT ignore authoritative fixtures such as:
+# fixtures/fix_base.json
+# fixtures/fix_fail.json
+
+# ------------------------------------------------------------
+# Simulation / Visualization generated files
+# ------------------------------------------------------------
+
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.pdf
+
+# Keep documentation PDFs if intentionally committed.
+# If your project generates PDFs into results/, they are already
+# ignored through results/.
+
+# Matplotlib cache
+.matplotlib/
+
+# ------------------------------------------------------------
+# Jupyter Notebook
+# ------------------------------------------------------------
+
+.ipynb_checkpoints/
+
+# ------------------------------------------------------------
+# IDEs
+# ------------------------------------------------------------
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# PyCharm
+.python-version
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ------------------------------------------------------------
+# Operating Systems
+# ------------------------------------------------------------
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# macOS Finder
+.Spotlight-V100
+.Trashes
+.fseventsd
+.DocumentRevisions-V100
+.TemporaryItems
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+
+# Windows installer files
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Linux
+.directory
+.Trash-*
+
+# ------------------------------------------------------------
+# Local development databases
+# ------------------------------------------------------------
+
+*.db
+*.sqlite
+*.sqlite3
+
+# ------------------------------------------------------------
+# Temporary files
+# ------------------------------------------------------------
+
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+
+tmp/
+temp/
+.cache/
+
+# ------------------------------------------------------------
+# Documentation generated artifacts
+# ------------------------------------------------------------
+
+site/
+docs/_build/
+docs/build/
+*.html
+
+# ------------------------------------------------------------
+# Dependency / tool caches
+# ------------------------------------------------------------
+
+.pip-cache/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Poetry
+.poetry/
+
+# PDM
+.pdm-python
+.pdm-build/
+
+# Hatch
+.hatch/
+
+# ------------------------------------------------------------
+# Local project metadata
+# ------------------------------------------------------------
+
+.local/
+.local.*
+.project.local/
+
+# ------------------------------------------------------------
+# Experiment / ML / data science temporary files
+# ------------------------------------------------------------
+
+*.pickle
+*.pkl
+*.joblib
+*.npy
+*.npz
+*.h5
+*.hdf5
+
+# ------------------------------------------------------------
+# Docker
+# ------------------------------------------------------------
+
+# Local Docker overrides
+docker-compose.override.yml
+
+# Docker volumes / local state
+.docker/
+docker-data/
+
+# ------------------------------------------------------------
+# Node / frontend artifacts
+# ------------------------------------------------------------
+
+# Only relevant if the dashboard later gets a JS frontend.
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ------------------------------------------------------------
+# Local deployment artifacts
+# ------------------------------------------------------------
+
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# ------------------------------------------------------------
+# OS / editor backup files
+# ------------------------------------------------------------
+
+*.orig
+*.save
+*.swp
+*.swo
+
+# ------------------------------------------------------------
+# Security / credentials
+# ------------------------------------------------------------
+
+credentials.json
+service-account.json
+service-account-key.json
+token.json
+tokens.json
+
+# ------------------------------------------------------------
+# Generated API / dashboard files
+# ------------------------------------------------------------
+
+instance/
+static/generated/
+ui/generated/
+
+# ------------------------------------------------------------
+# Local Flask state
+# ------------------------------------------------------------
+
+instance/
+
+# ------------------------------------------------------------
+# GitHub local tooling
+# ------------------------------------------------------------
+
+.github/local/
+
+# ============================================================
+# AI CODING ASSISTANTS / AGENT TOOLS
+# ============================================================
+
+# ------------------------------------------------------------
+# Claude Code
+# ------------------------------------------------------------
+
+.claude/
+.claude.local/
+.claude/settings.local.json
+
+# Claude Code local/debug artifacts
+.claude-code/
+claude-code.log
+
+# Keep shared Claude project instructions if you choose to
+# commit them:
+# CLAUDE.md
+
+
+# ------------------------------------------------------------
+# OpenAI Codex
+# ------------------------------------------------------------
+
+.codex/
+.codex.local/
+.codex-cache/
+.codex-state/
+codex.log
+
+# Keep project-level Codex instructions if intentionally shared:
+# AGENTS.md
+
+
+# ------------------------------------------------------------
+# Kiro
+# ------------------------------------------------------------
+
+.kiro/
+.kiro-local/
+.kiro/cache/
+.kiro/state/
+.kiro/logs/
+
+# IMPORTANT:
+# Kiro project specifications/steering files may be useful to
+# commit for the team. Do not automatically ignore them if
+# they are part of your project documentation.
+
+
+# ------------------------------------------------------------
+# Cursor
+# ------------------------------------------------------------
+
+.cursor/
+.cursor-cache/
+.cursor-state/
+
+# Cursor local workspace state
+.cursor-workspace/
+
+# Cursor-generated local files
+.cursorindex/
+
+
+# ------------------------------------------------------------
+# Windsurf
+# ------------------------------------------------------------
+
+.windsurf/
+.windsurf-cache/
+.windsurf-state/
+
+# Windsurf local workspace state
+.windsurf-workspace/
+
+
+# ------------------------------------------------------------
+# GitHub Copilot
+# ------------------------------------------------------------
+
+.github/copilot/
+.github/copilot-local/
+.github/copilot-cache/
+
+# Copilot local state
+.copilot/
+.copilot-cache/
+
+
+# ------------------------------------------------------------
+# Cline
+# ------------------------------------------------------------
+
+.cline/
+.cline-cache/
+.cline-state/
+.cline-workspace/
+
+
+# ------------------------------------------------------------
+# Roo Code
+# ------------------------------------------------------------
+
+.roo/
+.roo-cache/
+.roo-state/
+.roo-workspace/
+
+
+# ------------------------------------------------------------
+# Aider
+# ------------------------------------------------------------
+
+.aider/
+.aider-cache/
+.aider-state/
+
+# Aider history / local state
+.aider.chat.history.md
+.aider.input.history
+.aider.tags.cache.v3
+
+
+# ------------------------------------------------------------
+# Gemini / Google AI coding tools
+# ------------------------------------------------------------
+
+.gemini/
+.gemini-cache/
+.gemini-state/
+.gemini-workspace/
+
+
+# ------------------------------------------------------------
+# Amazon Q Developer
+# ------------------------------------------------------------
+
+.amazonq/
+.amazonq-cache/
+.amazonq-state/
+
+
+# ------------------------------------------------------------
+# Tabnine
+# ------------------------------------------------------------
+
+.tabnine/
+.tabnine-cache/
+
+
+# ------------------------------------------------------------
+# Continue
+# ------------------------------------------------------------
+
+.continue/
+.continue-cache/
+.continue-state/
+
+
+# ------------------------------------------------------------
+# JetBrains AI Assistant
+# ------------------------------------------------------------
+
+.ai/
+.ai-cache/
+
+
+# ------------------------------------------------------------
+# General AI / Agent temporary state
+# ------------------------------------------------------------
+
+.ai/
+.ai-cache/
+.ai-state/
+.ai-workspace/
+.ai-local/
+
+.agent/
+.agent-cache/
+.agent-state/
+.agent-workspace/
+.agent-local/
+
+.ai-temp/
+.ai-tmp/
+agent-cache/
+agent-state/
+agent-logs/
+
+# Local prompt/context/session files
+*.prompt.tmp
+*.prompt.cache
+*.agent.log
+*.agent.tmp
+*.agent.cache
+*.session.tmp
+*.session.cache
+
+# AI-generated temporary patches
+*.ai.patch
+*.agent.patch
+
+# Local MCP / tool state
+.mcp/
+.mcp-cache/
+.mcp-state/
+.mcp-local/
+
+
+# ------------------------------------------------------------
+# Local AI credentials / secrets
+# ------------------------------------------------------------
+
+.ai-credentials
+.ai-credentials.*
+.ai-token
+.ai-token.*
+ai-credentials.json
+ai-config.local.json
+
+# Never commit API keys
+*api_key*
+*apikey*
+*api-key*
+*access_token*
+*access-token*
+*secret_key*
+*secret-key*

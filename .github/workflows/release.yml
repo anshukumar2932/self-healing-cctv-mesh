@@ -1,0 +1,24 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Create source archive
+        run: |
+          git archive --format=zip --output=self-healing-cctv-mesh-${{ github.sha }}.zip HEAD
+
+      - name: Upload archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: self-healing-cctv-mesh
+          path: self-healing-cctv-mesh-${{ github.sha }}.zip
