@@ -25,6 +25,11 @@ addopts = "-ra"
 line-length = 100
 target-version = "py311"
 
+[tool.ruff.lint.per-file-ignores]
+# The P4 acceptance suite is kept verbatim (see docs/testing.md); its short
+# loop variables and unused import are not worth editing the authoritative file.
+"testcase_failure.py" = ["E741", "F401"]
+
 [tool.coverage.run]
 source = ["src", "ui"]
 
