@@ -33,8 +33,7 @@ keep those runners during migration. The goal is to make `pytest` the common CI 
 Preserve the existing test IDs exactly. When converting a fixed case into pytest, use a clear test name such as:
 
 ```python
-def test_SIM_002():
-    ...
+def test_SIM_002(): ...
 ```
 
 Do not silently change expected values, fixture definitions, topology, seed, or tolerances.

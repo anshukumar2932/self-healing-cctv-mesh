@@ -34,6 +34,7 @@ def register(namespace, prefix):
         def make(case):
             def test_case():
                 case(MODULES)
+
             return test_case
 
         test = make(fn)

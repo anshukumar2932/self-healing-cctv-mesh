@@ -13,20 +13,21 @@ no verified route is left the engine reports recovery_failed with fallback
 Owner: P4 (Failure + Storage Engineer).  Checked by REC-001 .. REC-008.
 """
 
+import itertools
 import time
 
 DEFAULT_CONFIG = {
-    "ack_timeout_s": 1.0,            # cost of every verification that fails
+    "ack_timeout_s": 1.0,  # cost of every verification that fails
     "control_message_delay_ms": 10,  # one-way delay of a control message
     "max_allowed_hops": 6,
-    "max_attempts": 50,              # safety stop for the retry loop
+    "max_attempts": 50,  # safety stop for the retry loop
 }
 
 FALLBACK_STORE = "store_locally"
 
 
 def _route_edges(route):
-    return {frozenset(pair) for pair in zip(route, route[1:])}
+    return {frozenset(pair) for pair in itertools.pairwise(route)}
 
 
 def _route_affected(failure, route):
@@ -80,8 +81,7 @@ class RecoveryEngine:
         return res
 
     # ------------------------------------------------------------------ API
-    def recover(self, failure, nodes, links, source, current_route,
-                now=None, packets_lost=0):
+    def recover(self, failure, nodes, links, source, current_route, now=None, packets_lost=0):
         """Handle one failure for one source camera.
 
         failure        -- failure_detected event (or the raw failure dict)
@@ -109,8 +109,14 @@ class RecoveryEngine:
             res["fallback"] = FALLBACK_STORE
             res["recovery_time_ms"] = float(cfg["control_message_delay_ms"])
             res["control_messages_sent"] = 1
-            events.append({"event_type": "buffering_started", "timestamp": now,
-                           "node_id": source, "reason": "source_offline"})
+            events.append(
+                {
+                    "event_type": "buffering_started",
+                    "timestamp": now,
+                    "node_id": source,
+                    "reason": "source_offline",
+                }
+            )
             return self._finish(res)
 
         if not _route_affected(failure, current_route):
@@ -148,9 +154,14 @@ class RecoveryEngine:
 
             candidate = routing.get("selected_route")
             if not candidate or list(candidate) in excluded:
-                events.append({"event_type": "no_route", "timestamp": now,
-                               "source": source,
-                               "reason": routing.get("reason", "no_route")})
+                events.append(
+                    {
+                        "event_type": "no_route",
+                        "timestamp": now,
+                        "source": source,
+                        "reason": routing.get("reason", "no_route"),
+                    }
+                )
                 break
             candidate = list(candidate)
 
@@ -163,8 +174,14 @@ class RecoveryEngine:
                 break
             failed_verifications += 1
             excluded.append(candidate)
-            events.append({"event_type": "route_rejected", "timestamp": now,
-                           "route": candidate, "reason": "no_ack"})
+            events.append(
+                {
+                    "event_type": "route_rejected",
+                    "timestamp": now,
+                    "route": candidate,
+                    "reason": "no_ack",
+                }
+            )
 
         res["route_computation_time_ms"] = comp_ms
         res["control_messages_sent"] = max(control, 1)
@@ -176,8 +193,14 @@ class RecoveryEngine:
 
         if verified_route is None:
             res["fallback"] = FALLBACK_STORE
-            events.append({"event_type": "buffering_started", "timestamp": now,
-                           "node_id": source, "reason": "no_verified_route"})
+            events.append(
+                {
+                    "event_type": "buffering_started",
+                    "timestamp": now,
+                    "node_id": source,
+                    "reason": "no_verified_route",
+                }
+            )
             return self._finish(res)
 
         res["event_type"] = "recovery_complete"
@@ -185,11 +208,22 @@ class RecoveryEngine:
         res["route_verified"] = True
         if verified_route != list(current_route or []):
             self.route_changes += 1
-            events.append({"event_type": "route_changed", "timestamp": now,
-                           "source": source,
-                           "old_route": list(current_route or []),
-                           "new_route": verified_route})
-        events.append({"event_type": "route_verified", "timestamp": now,
-                       "source": source, "route": verified_route})
+            events.append(
+                {
+                    "event_type": "route_changed",
+                    "timestamp": now,
+                    "source": source,
+                    "old_route": list(current_route or []),
+                    "new_route": verified_route,
+                }
+            )
+        events.append(
+            {
+                "event_type": "route_verified",
+                "timestamp": now,
+                "source": source,
+                "route": verified_route,
+            }
+        )
         log.append("NORMAL")
         return self._finish(res)

@@ -131,7 +131,8 @@ The three pytest files are then three lines each:
 
 ```python
 from _p4_acceptance import register
-register(globals(), "FAIL")   # or "REC" / "STO"
+
+register(globals(), "FAIL")  # or "REC" / "STO"
 ```
 
 For the bridge to import the suite, `testcase_failure.py` lives at the **repository root**

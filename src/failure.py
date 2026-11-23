@@ -9,11 +9,11 @@ Owner: P4 (Failure + Storage Engineer).  Checked by FAIL-001 .. FAIL-017.
 """
 
 DEFAULT_CONFIG = {
-    "warning_threshold": 0.60,      # load >= this  -> WARNING
-    "congestion_threshold": 0.80,   # load >= this  -> CONGESTED
+    "warning_threshold": 0.60,  # load >= this  -> WARNING
+    "congestion_threshold": 0.80,  # load >= this  -> CONGESTED
     "packet_loss_threshold": 0.50,  # packet_loss > this -> link inactive
-    "quality_threshold": 0.30,      # quality < this     -> link inactive
-    "heartbeat_timeout_s": 2.0,     # silence > this     -> node offline
+    "quality_threshold": 0.30,  # quality < this     -> link inactive
+    "heartbeat_timeout_s": 2.0,  # silence > this     -> node offline
 }
 
 FAILURE_TYPES = ("relay_node", "source_camera", "link", "congestion")
@@ -79,8 +79,10 @@ def evaluate_link(link, config=None):
     Returns the link's (possibly updated) active flag.
     """
     cfg = _cfg(config)
-    if (link.get("packet_loss", 0.0) > cfg["packet_loss_threshold"]
-            or link.get("quality", 1.0) < cfg["quality_threshold"]):
+    if (
+        link.get("packet_loss", 0.0) > cfg["packet_loss_threshold"]
+        or link.get("quality", 1.0) < cfg["quality_threshold"]
+    ):
         link["active"] = False
     return bool(link.get("active", True))
 
@@ -111,8 +113,16 @@ def check_heartbeats(nodes, now, config=None):
         if now - last > timeout:
             node["online"] = False
             ftype = "source_camera" if node.get("role") == "source" else "relay_node"
-            events.append(_event("failure_detected", now, ftype, node["id"],
-                                 last_heartbeat=last, detected_by="heartbeat"))
+            events.append(
+                _event(
+                    "failure_detected",
+                    now,
+                    ftype,
+                    node["id"],
+                    last_heartbeat=last,
+                    detected_by="heartbeat",
+                )
+            )
     return events
 
 
@@ -133,8 +143,7 @@ def inject_failure(nodes, links, failure):
     when = failure.get("failure_time", failure.get("timestamp", 0.0))
 
     if ftype not in FAILURE_TYPES:
-        raise ValueError(f"unknown failure_type {ftype!r}; "
-                         f"expected one of {FAILURE_TYPES}")
+        raise ValueError(f"unknown failure_type {ftype!r}; expected one of {FAILURE_TYPES}")
     if not element:
         raise ValueError("failed_element is required")
 
@@ -160,8 +169,7 @@ def inject_failure(nodes, links, failure):
     if load is None:
         raise ValueError("congestion failure needs a 'load' value")
     node["load"] = load
-    return _event("failure_detected", when, ftype, element,
-                  load=load, state=classify_load(load))
+    return _event("failure_detected", when, ftype, element, load=load, state=classify_load(load))
 
 
 def restore_element(nodes, links, element, now):
