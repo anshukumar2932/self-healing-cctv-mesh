@@ -1,1 +1,3 @@
-"""Starter module: Discrete-event network simulation."""\n\n# TODO: migrate the team's implementation here.\n
+"""Starter module: Discrete-event network simulation."""
+
+# TODO: migrate the team's implementation here.

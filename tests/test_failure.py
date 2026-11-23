@@ -1,5 +1,9 @@
-"""Starter test module — P4: failure tests."""
+"""P4: failure.py acceptance tests (FAIL-001 .. FAIL-017).
 
-def test_failure_scaffold():
-    """Temporary scaffold check; replace with the assigned acceptance tests."""
-    assert True
+The expected values live in testcase_failure.py at the repository root.
+This module only exposes them to pytest under their original IDs.
+"""
+
+from _p4_acceptance import register
+
+register(globals(), "FAIL")

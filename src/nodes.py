@@ -1,1 +1,3 @@
-"""Starter module: Node creation and node state management."""\n\n# TODO: migrate the team's implementation here.\n
+"""Starter module: Node creation and node state management."""
+
+# TODO: migrate the team's implementation here.
