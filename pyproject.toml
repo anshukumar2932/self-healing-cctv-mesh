@@ -29,6 +29,9 @@ target-version = "py311"
 # The P4 acceptance suite is kept verbatim (see docs/testing.md); its short
 # loop variables and unused import are not worth editing the authoritative file.
 "testcase_failure.py" = ["E741", "F401"]
+# The P3 and P6 acceptance suites are kept verbatim as well.
+"testcase_sim.py" = ["F401", "RUF007", "B023", "BLE001"]
+"testcase_dashboard.py" = ["SIM102", "SIM115", "BLE001"]
 
 [tool.coverage.run]
 source = ["src", "ui"]

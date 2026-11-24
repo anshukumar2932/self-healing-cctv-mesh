@@ -1,6 +1,8 @@
-"""Starter test module — P3: topology tests."""
+"""P3: topology.py acceptance tests (TOP-001 .. TOP-007).
 
+The expected values live in testcase_sim.py next to this file.
+This module only exposes them to pytest under their original IDs."""
 
-def test_topology_scaffold():
-    """Temporary scaffold check; replace with the assigned acceptance tests."""
-    assert True
+from _p3_acceptance import register
+
+register(globals(), "TOP")

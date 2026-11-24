@@ -1,34 +1,36 @@
-# Replace @P1 ... @P6 with the team's real GitHub usernames.
+# P1 - shared contracts and integration
+/src/schemas.py @anshukumar2932
+/src/config.py @anshukumar2932
+/tests/test_schemas.py @anshukumar2932
+/tests/test_project_structure.py @anshukumar2932
 
-# Shared contracts and integration
-/src/schemas.py @P1
-/src/config.py @P1
+# P2 - routing
+/src/routing.py @Vulture-avs
+/tests/test_routing.py @Vulture-avs
 
-# P2 — routing
-/src/routing.py @P2
-/tests/test_routing.py @P2
+# P3 - topology and simulation
+/src/topology.py @LogicHaze
+/src/nodes.py @LogicHaze
+/src/links.py @LogicHaze
+/src/simulation.py @LogicHaze
+/tests/test_topology.py @LogicHaze
+/tests/test_simulation.py @LogicHaze
 
-# P3 — topology and simulation
-/src/topology.py @P3
-/src/nodes.py @P3
-/src/links.py @P3
-/src/simulation.py @P3
-/tests/test_topology.py @P3
-/tests/test_simulation.py @P3
+# P4 - failure, recovery, storage
+/src/failure.py @yasharyan90
+/src/recovery.py @yasharyan90
+/src/storage.py @yasharyan90
+/tests/test_failure.py @yasharyan90
+/tests/test_recovery.py @yasharyan90
+/tests/test_storage.py @yasharyan90
+/tests/testcase_failure.py @yasharyan90
+/tests/_p4_acceptance.py @yasharyan90
 
-# P4 — failure, recovery, storage
-/src/failure.py @P4
-/src/recovery.py @P4
-/src/storage.py @P4
-/tests/test_failure.py @P4
-/tests/test_recovery.py @P4
-/tests/test_storage.py @P4
+# P5 - QA and documentation
+/docs/ @REPLACE_WITH_P5_USERNAME
+/experiments/ @REPLACE_WITH_P5_USERNAME
+/results/ @REPLACE_WITH_P5_USERNAME
 
-# P6 — dashboard/API
-/ui/ @P6
-/tests/test_api.py @P6
-
-# P5 — QA/documentation
-/docs/ @P5
-/experiments/ @P5
-/results/ @P5
+# P6 - dashboard and API
+/ui/ @ajaykumawat12
+/tests/test_api.py @ajaykumawat12

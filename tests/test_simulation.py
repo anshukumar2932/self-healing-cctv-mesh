@@ -1,6 +1,8 @@
-"""Starter test module — P3: simulation tests."""
+"""P3: simulation.py acceptance tests (SIM-001 .. SIM-019).
 
+The expected values live in testcase_sim.py next to this file.
+This module only exposes them to pytest under their original IDs."""
 
-def test_simulation_scaffold():
-    """Temporary scaffold check; replace with the assigned acceptance tests."""
-    assert True
+from _p3_acceptance import register
+
+register(globals(), "SIM")
