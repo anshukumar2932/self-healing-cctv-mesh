@@ -23,6 +23,7 @@
 - [ ] `./check.sh` passes
 - [ ] Tests pass locally
 - [ ] CI passes
+- [ ] If my module is now implemented, its tests run for real (`pytest --runxfail tests/test_<module>.py`)
 
 ## Checklist
 

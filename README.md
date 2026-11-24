@@ -12,6 +12,7 @@ A Python-based simulation and evaluation project for a self-healing CCTV mesh ne
 - `experiments/` — experiment definitions and scripts
 - `results/` — generated experiment/test results
 - `.github/` — CI/CD, issue templates, and pull-request standards
+- [`docs/handbook.md`](docs/handbook.md) — team handbook: roles, data contracts, test cases, definition of done
 
 ## Team test ownership
 
