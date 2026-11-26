@@ -42,7 +42,9 @@ class CameraAgent:
     """Streams live heartbeats and mesh packet events for a single CCTV node."""
 
     def __init__(self, server_url: str, node_id: str, interval: float = 0.7, packet_interval: float = 2.5):
-        self.server_url = normalize_server_url(server_url)
+        # several comma-separated server URLs: the agent follows the active one after a failover
+        self.servers = [normalize_server_url(u) for u in server_url.split(",") if u.strip()]
+        self.server_url = self.servers[0]
         self.node_id = node_id
         self.interval = max(0.2, float(interval))
         self.packet_interval = float(packet_interval)
@@ -55,6 +57,32 @@ class CameraAgent:
         self._lock = threading.Lock()
         self._last_error: str | None = None
 
+    def _post(self, path, payload):
+        """POST to the current server; on error or 'standby' (409) try the other servers."""
+        order = [self.server_url] + [u for u in self.servers if u != self.server_url]
+        last = None
+        for base in order:
+            try:
+                res = post_json(f"{base}{path}", payload)
+            except urllib.error.HTTPError as exc:
+                last = exc
+                if exc.code == 409:
+                    try:
+                        hint = json.loads(exc.read().decode("utf-8")).get("active_url")
+                    except (ValueError, OSError):
+                        hint = None
+                    if hint and hint not in order:
+                        self.servers.append(normalize_server_url(hint))
+                        order.append(normalize_server_url(hint))
+            except (urllib.error.URLError, TimeoutError, OSError) as exc:
+                last = exc
+            else:
+                if base != self.server_url:
+                    print(f"[{self.node_id}] Switched to server {base}")
+                    self.server_url = base
+                return res
+        raise last if last else OSError("no server configured")
+
     def send_heartbeat(self) -> dict | None:
         if self.paused:
             return None
@@ -64,7 +92,7 @@ class CameraAgent:
             "os": self.os_name,
         }
         try:
-            res = post_json(f"{self.server_url}/api/heartbeat", payload)
+            res = self._post("/api/heartbeat", payload)
             route = res.get("route")
             with self._lock:
                 self.current_route = route.get("path") if isinstance(route, dict) else None
@@ -119,7 +147,7 @@ class CameraAgent:
                 "destination": path[-1],
             })
         try:
-            post_json(f"{self.server_url}/api/events", events)
+            self._post("/api/events", events)
             return True
         except (urllib.error.URLError, TimeoutError, OSError):
             return False
@@ -127,7 +155,7 @@ class CameraAgent:
     def trigger_failure(self):
         self.paused = True
         try:
-            post_json(f"{self.server_url}/api/events", {
+            self._post("/api/events", {
                 "event_type": "failure_detected",
                 "timestamp": time.time(),
                 "failure_type": "relay_node" if self.node_id == "CCTV3" else "source_camera",
@@ -167,7 +195,7 @@ class CameraAgent:
 def resolve_args():
     parser = argparse.ArgumentParser(description="Connect a Windows/macOS device as a live CCTV mesh node.")
     parser.add_argument("--server", default=os.environ.get("CCTV_SERVER", ""),
-                        help="Variable main server URL, e.g. http://192.168.1.42:5050")
+                        help="Server URL(s), comma-separated to follow failover, e.g. http://A:5050,http://B:5050")
     parser.add_argument("--node", default=os.environ.get("CCTV_NODE", ""),
                         help="Camera node ID (CCTV1..CCTV6)")
     parser.add_argument("--interval", type=float, default=0.7, help="Heartbeat interval in seconds (default: 0.7)")
@@ -190,7 +218,7 @@ def resolve_args():
         print(f"Error: --node must be one of {', '.join(VALID_CAMERAS)}.", file=sys.stderr)
         sys.exit(1)
 
-    args.server = normalize_server_url(server)
+    args.server = ",".join(normalize_server_url(u) for u in server.split(",") if u.strip())
     args.node = node
     return args
 
