@@ -1,8 +1,13 @@
 """P6 dashboard state and PNG renderer for the Self-Healing CCTV Mesh Network."""
 from __future__ import annotations
 
+<<<<<<< HEAD
 import json
 import os
+=======
+import itertools
+import json
+>>>>>>> 29049ca (Improved Dashboard with different TABS for routes and camera)
 from collections import OrderedDict
 
 NODE_IDS = ["CCTV1", "CCTV2", "CCTV3", "CCTV4", "CCTV5", "CCTV6", "Gateway", "Server"]
@@ -133,6 +138,12 @@ class DashboardState:
             elif typ == "recovery_complete":
                 node = event.get("node_id") or element
                 status = event.get("node_status")
+<<<<<<< HEAD
+=======
+                if event.get("link_status") == "active" and self._known_link_element(element):
+                    pair = element if isinstance(element, (list, tuple)) else element.split("-", 1)
+                    self._link_active[_edge_key(*pair)] = True
+>>>>>>> 29049ca (Improved Dashboard with different TABS for routes and camera)
                 if status is not None and node is not None:
                     if not self._set_node(node, status): self.ignored_events.append(event); return False
                 elif node in self.nodes and not event.get("new_route"):
@@ -188,7 +199,11 @@ class DashboardState:
                 self._control_messages_seen = True
             self._events_applied += 1
             return True
+<<<<<<< HEAD
         except Exception:
+=======
+        except Exception:  # noqa: BLE001 - a malformed event must never crash the dashboard
+>>>>>>> 29049ca (Improved Dashboard with different TABS for routes and camera)
             self.ignored_events.append(event)
             return False
 
@@ -281,7 +296,11 @@ def load_events(path):
     except (json.JSONDecodeError, UnicodeDecodeError) as exc:
         raise ValueError(f"Invalid JSON event file: {exc}") from exc
     if not isinstance(data, list):
+<<<<<<< HEAD
         raise ValueError("Event JSON must contain a list")
+=======
+        raise ValueError("Event JSON must contain a list")  # noqa: TRY004
+>>>>>>> 29049ca (Improved Dashboard with different TABS for routes and camera)
     return data
 
 
@@ -295,7 +314,11 @@ def render_png(state, path):
     route_edges = set()
     for info in state._routes.values():
         p = info["path"]
+<<<<<<< HEAD
         route_edges.update(_edge_key(a, b) for a, b in zip(p, p[1:]))
+=======
+        route_edges.update(_edge_key(a, b) for a, b in itertools.pairwise(p))
+>>>>>>> 29049ca (Improved Dashboard with different TABS for routes and camera)
     for l in state.links:
         a, b = l["source"], l["destination"]
         active = state._link_active.get(_edge_key(a, b), False)

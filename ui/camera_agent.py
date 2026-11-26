@@ -16,7 +16,6 @@ import time
 import urllib.error
 import urllib.request
 
-
 VALID_CAMERAS = ["CCTV1", "CCTV2", "CCTV3", "CCTV4", "CCTV5", "CCTV6"]
 
 
